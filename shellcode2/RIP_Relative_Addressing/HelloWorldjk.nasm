@@ -3,22 +3,26 @@ global start
 section .text
 
 _start:
+	jmp _realstart
+	hello_world: db "Hello SLAE-64",0xa
 
+_realstart:
 
 	;print to screen
 
-	mov rax, 1
-	mov rdi, 1
-	mov rsi, hello_world
-	mov rdx, length
+	xor rax, rax
+	add rax, 1
+	xor rdi, rdi
+	add rdi, 1
+	lea rsi, [rel hello_world]
+	mov rdx, 15
 	syscall
 
 	;exit gracefully
-	mov rax, 60
-	mov rdi, 11
+	xor rax, rax
+	add rax, 60
+	xor rdi, rdi
+	add rdi, 11
 	syscall
 
-section .data
 
-	hello_world: db "Hello World to the SLAE-64 Course",0xa
-	length: equ $-hello_world
